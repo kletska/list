@@ -62,11 +62,12 @@ mod tests {
 
     #[test]
     fn list_second_branch() {
-        let list = list!((a + b, a, b); 
-                                         a <- list!(1, 2, 3), 
-                                         b <- list!(4, 5, 6)
+        let list = list!((if c {a} else {b}, a, b, c); 
+                                         a <- list!(1, 2), 
+                                         b <- list!(4, 5),
+                                         c <- list!(true, false)
                                         );
-        print!("{:?}", list);
+        print!("{:#?}", list);
     }
 }
 

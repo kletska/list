@@ -68,6 +68,14 @@ where F: Fn(A) -> B {
     }
 }
 
+pub fn fold<A: Clone, B, F>(a: PList<A>, acc: B, f: F) -> B 
+where F: Fn(B, A) -> B {
+    match &*a.0 {
+        List::Nil => acc,
+        List::Cons(h, t) => fold(PList(t.clone()), f(acc, h.clone()), f)
+    }
+}
+
 pub fn next<T: Clone>(lst: &mut PList<T>) -> Option<T> {
     let (res, new_lst) = match &*(*lst).0 {
         List::Nil => (None, nil()),
